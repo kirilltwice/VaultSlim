@@ -1,108 +1,86 @@
-# Vault - Abstraction Library for Bukkit - [![Build Status](https://app.travis-ci.com/MilkBowl/Vault.svg?branch=master)](https://app.travis-ci.com/MilkBowl/Vault)
+# VaultSlim - Streamlined Vault for Modern Minecraft Servers
 
-## For Developers:
-Please see the [VaultAPI](https://www.github.com/MilkBowl/VaultAPI) page for
-information on developing with Vault's API. In the past, you would use the same
-artifact as servers installed, but the API has now been split from the main
-project and is under a different artifact name. Please make sure you accommodate
-this change in your build process.
+**VaultSlim** is a lightweight fork of the classic Vault plugin, optimized for modern Minecraft servers. It maintains full compatibility with the original Vault while removing outdated implementations that waste server resources.
 
-## Installing
-Installing Vault is as simple as copying the provided "Vault.jar" to your
-"<bukkit-install-dir>/plugins" directory, and the rest is automatic! If you
-wish to perform configuration changes, this can be done via a configuration
-file but should not be necessary in most cases. See the "Advanced
-Configuration" section for more information.
+## 🚀 What makes VaultSlim different?
 
+Modern Minecraft servers use **LuckPerms** as the standard for permissions and chat, but original Vault still tries to detect and load implementations for 35+ dead plugins like PermissionsEx, bPermissions, GroupManager, mChat, iChat, and many others that nobody uses anymore.
 
-## Why Vault?
-I have no preference which library suits your plugin and development efforts
-best. Really, I thought a central suite (rather...Vault) of solutions was the
-proper avenue than focusing on a single category of plugin. That's where
-the idea for Vault came into play.
+### What VaultSlim removes:
+- ❌ **Update checker** - No more network calls to dead APIs
+- ❌ **35+ legacy plugin implementations** - No startup time wasted detecting dead plugins
+- ❌ **Useless metrics collection** - No tracking of unused permission/chat implementations
 
-So, what features do I _think_ you'll like the most?
+### What VaultSlim adds:
+- ✅ **Built-in PlaceholderAPI integration** - Economy placeholders work out of the box
+- ✅ **Faster startup** - No time wasted scanning for dead plugins
+- ✅ **Same identity** - Uses `provides: [Vault]` so all plugins see it as original Vault
 
-* No need to include my source code in your plugin
-  All of Vault is run in its own plugin, so all you need to do is obtain an
-  instance of it! This simplifies issues with multiple plugins using the same
-  namespaces. Just simply add Vault.jar to your download zip file!
-* Broad range of supported plugins
-  I wanted an abstraction layer not only for Economic plugins but also
-  Permission plugins as well.
-* Choice!
-  That's half the fun of Bukkit! We get to choose what to use. More choice
-  has never hurt developers, so here's to choice!
+## 📦 Installation
 
+**Simple replacement:**
+1. Stop your server
+2. Remove original `Vault.jar` from plugins folder
+3. Add `VaultSlim.jar` to plugins folder
+4. Start your server
 
-## Permissions
-* vault.admin
-  - Determines if a player should receive the update notices
+All your existing plugins will work exactly the same!
 
-## License
-Copyright (C) 2011-2018 Morgan Humes <morgan@lanaddict.com>
+## 🔧 For Developers
 
-Vault is free software: you can redistribute it and/or modify
-it under the terms of the GNU Lesser General Public License as published by
-the Free Software Foundation, either version 3 of the License, or
-(at your option) any later version.
+VaultSlim is **100% API compatible** with original Vault:
 
-Vault is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-GNU Lesser General Public License for more details.
+```java
+// These work exactly as before:
+Plugin vault = getServer().getPluginManager().getPlugin("Vault");
+Plugin vaultSlim = getServer().getPluginManager().getPlugin("VaultSlim"); 
 
-You should have received a copy of the GNU Lesser General Public License
-with Vault. If not, see <http://www.gnu.org/licenses/>.
+// Economy API unchanged:
+RegisteredServiceProvider<Economy> rsp = getServer().getServicesManager().getRegistration(Economy.class);
+if (rsp != null) {
+    Economy economy = rsp.getProvider();
+    // All methods work the same
+}
+```
 
-## Building
-Vault comes with all libraries needed to build from the current branch and
-also comes with an Apache Ant build file (build.xml) and a Maven build file
-(pom.xml). Maven is currently the preferred build method.
+**No code changes needed** - VaultSlim keeps the same package structure (`net.milkbowl.vault`) and class names as original Vault.
 
+## 🎯 Supported Economy Plugins
 
-## Dependencies
-Because Vault provides a bridge to other plugins, their binaries will be
-required to build from. To ease this, they have been included in the lib
-folder and will be updated from time to time. For plugin developers, it
-is not necessary to use these libraries when implementing Vault. You will
-only need to compile against Vault.
+VaultSlim works with all economy plugins that support Vault API:
+- EssentialsX Economy
+- CMI Economy
+- TNE (The New Economy)
+- И все остальные!
 
+## 📋 PlaceholderAPI Integration
 
-## Supported Plugins
-Vault provides abstraction for the following categories and plugins. If
-you have your own plugin that you believe should be supported, you'll need
-to add your own connector within your plugin as Vault no longer maintains
-new plugin connectors.
+VaultSlim includes built-in economy placeholders:
+- `%vault_eco_balance%` - Player's balance
+- `%vault_eco_balance_fixed%` - Balance with fixed decimal places
+- `%vault_eco_balance_formatted%` - Formatted balance with currency symbol
 
-* Permissions
-  - bPermissions
-  - bPermissions 2 (https://dev.bukkit.org/projects/bpermissions)
-  - DroxPerms
-  - Group Manager (Essentials) (https://forums.bukkit.org/threads/15312/)
-  - LuckPerms (https://www.spigotmc.org/resources/luckperms-an-advanced-permissions-plugin.28140/)
-  - OverPermissions (https://dev.bukkit.org/projects/overpermissions)
-  - Permissions 3 (https://forums.bukkit.org/threads/18430/)
-  - PermissionsBukkit
-  - Permissions Ex (PEX) (https://forums.bukkit.org/threads/18140/)
-  - Privileges
-  - rscPermissions
-  - SimplyPerms
-  - SuperPerms (Bukkit's default)
-  - TotalPermissions (https://dev.bukkit.org/projects/totalpermissions)
-  - XPerms
-  - zPermissions
+No separate expansion needed! See [complete placeholder list](https://wiki.placeholderapi.com/users/placeholder-list/#vault) for all available options.
 
-* Chat
-  - bPermissions
-  - Group Manager (Essentials) (https://forums.bukkit.org/threads/15312/)
-  - iChat
-  - LuckPerms (https://www.spigotmc.org/resources/luckperms-an-advanced-permissions-plugin.28140/)
-  - mChat
-  - mChatSuite
-  - OverPermissions (https://dev.bukkit.org/projects/overpermissions)
-  - Permissions 3 (https://forums.bukkit.org/threads/18430/)
-  - Permissions Ex (PEX) (https://forums.bukkit.org/threads/18140/)
-  - rscPermissions
-  - TotalPermissions (https://dev.bukkit.org/projects/totalpermissions)
-  - zPermissions
+## 🏗️ Building
+
+```bash
+git clone https://github.com/groundbreakingmc/VaultSlim.git
+cd VaultSlim  
+mvn clean package
+```
+
+## 📜 License
+
+VaultSlim inherits the same license as original Vault.
+
+## ⭐ Why choose VaultSlim?
+
+- **Perfect drop-in replacement** - Works with all existing plugins
+- **Modern server focused** - No resources wasted on dead plugins
+- **Faster startup** - No scanning for 35+ legacy plugins
+- **PlaceholderAPI included** - No need for separate expansion downloads
+- **Same plugin identity** - All plugins recognize it as "Vault"
+
+---
+*VaultSlim - Because sometimes less is more.*
