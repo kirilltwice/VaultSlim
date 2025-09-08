@@ -1,18 +1,43 @@
-*/**/.classpath
-.classpath
-*/**/.externalToolBuilders
-.externalToolBuilders
-*/**/.project
-.project
-*/**/.settings
-.settings
-javadoc
-Vault.jar
-/Vault.iml
-/target
+.gradle
+build/
+!gradle/wrapper/gradle-wrapper.jar
+!**/src/main/**/build/
+!**/src/test/**/build/
 
-#added by LRFLEW
-#feel free to remove
-bin
-*.DS_Store
-/dependency-reduced-pom.xml
+### IntelliJ IDEA ###
+.idea/
+*.iws
+*.iml
+*.ipr
+out/
+!**/src/main/**/out/
+!**/src/test/**/out/
+
+### Eclipse ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+bin/
+!**/src/main/**/bin/
+!**/src/test/**/bin/
+
+### NetBeans ###
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+
+### VS Code ###
+.vscode/
+
+### Mac OS ###
+.DS_Store
+
+### Other ###
+*.log
+logs/

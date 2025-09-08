@@ -1,0 +1,45 @@
+plugins {
+    java
+    id("io.github.goooler.shadow") version "8.1.8"
+}
+
+group = "com.github.groundbreakingmc"
+version = "1.0"
+
+repositories {
+    mavenCentral() // FastUtil
+    maven("https://repo.papermc.io/repository/maven-public/") // Paper
+    maven("https://jitpack.io") // VaultAPI
+    maven("https://repo.extendedclip.com/releases/") // PlaceholderAPI
+}
+
+dependencies {
+    compileOnly("com.destroystokyo.paper:paper-api:1.12-R0.1-SNAPSHOT")
+
+    // https://mvnrepository.com/artifact/it.unimi.dsi/fastutil
+    // doesn't want to be imported from paper (idk why...)
+    compileOnly("it.unimi.dsi:fastutil:8.5.16")
+
+    // https://github.com/MilkBowl/VaultAPI
+    implementation("com.github.MilkBowl:VaultAPI:master-SNAPSHOT")
+
+    // https://github.com/PlaceholderAPI/PlaceholderAPI/wiki/Hook-into-PlaceholderAPI
+    compileOnly("me.clip:placeholderapi:2.11.6")
+}
+
+
+tasks {
+    withType<JavaCompile> {
+        options.encoding = "UTF-8"
+        sourceCompatibility = "17"
+        targetCompatibility = "17"
+    }
+
+    shadowJar {
+        archiveClassifier.set("") // removes "-all"
+    }
+
+    build {
+        dependsOn(shadowJar)
+    }
+}
