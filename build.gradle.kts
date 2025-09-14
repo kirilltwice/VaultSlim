@@ -21,7 +21,7 @@ dependencies {
     compileOnly("it.unimi.dsi:fastutil:8.5.16")
 
     // https://github.com/MilkBowl/VaultAPI
-    implementation("com.github.MilkBowl:VaultAPI:master-SNAPSHOT")
+    implementation("com.github.MilkBowl:VaultAPI:1.7.1")
 
     // https://github.com/PlaceholderAPI/PlaceholderAPI/wiki/Hook-into-PlaceholderAPI
     compileOnly("me.clip:placeholderapi:2.11.6")
